@@ -80,7 +80,7 @@ docker/snmp-alerts.yml
 Reemplaza:
 
 ```yaml
-community: CHANGE_ME
+community: CAMBIAR
 ```
 
 por la comunidad SNMP configurada en las impresoras.
