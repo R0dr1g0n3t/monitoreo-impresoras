@@ -1,0 +1,59 @@
+auths:
+  public_v2:
+    community: CAMBIAR
+    security_level: noAuthNoPriv
+    auth_protocol: MD5
+    priv_protocol: DES
+    version: 2
+
+modules:
+  printer_alerts:
+    walk:
+      - 1.3.6.1.2.1.43.18.1.1.2
+      - 1.3.6.1.2.1.43.18.1.1.7
+      - 1.3.6.1.2.1.43.18.1.1.8
+
+    metrics:
+      - name: prtAlertSeverityLevel
+        oid: 1.3.6.1.2.1.43.18.1.1.2
+        type: gauge
+        help: Nivel de severidad de la alerta activa
+        indexes:
+          - labelname: hrDeviceIndex
+            type: gauge
+          - labelname: prtAlertIndex
+            type: gauge
+
+      - name: prtAlertCode
+        oid: 1.3.6.1.2.1.43.18.1.1.7
+        type: gauge
+        help: Código de la alerta activa
+        indexes:
+          - labelname: hrDeviceIndex
+            type: gauge
+          - labelname: prtAlertIndex
+            type: gauge
+        lookups:
+          - labels:
+              - hrDeviceIndex
+              - prtAlertIndex
+            labelname: prtAlertDescription
+            oid: 1.3.6.1.2.1.43.18.1.1.8
+            type: DisplayString
+
+      - name: prtAlertDescription
+        oid: 1.3.6.1.2.1.43.18.1.1.8
+        type: DisplayString
+        help: Descripción textual de la alerta activa
+        indexes:
+          - labelname: hrDeviceIndex
+            type: gauge
+          - labelname: prtAlertIndex
+            type: gauge
+        lookups:
+          - labels:
+              - hrDeviceIndex
+              - prtAlertIndex
+            labelname: prtAlertDescription
+            oid: 1.3.6.1.2.1.43.18.1.1.8
+            type: DisplayString

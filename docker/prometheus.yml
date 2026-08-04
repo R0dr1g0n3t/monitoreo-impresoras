@@ -1,0 +1,103 @@
+global:
+  scrape_interval: 15s
+
+scrape_configs:
+
+  # Monitorea el propio servidor Prometheus
+  - job_name: prometheus
+    static_configs:
+      - targets:
+          - localhost:9090
+
+  # Comprueba disponibilidad HTTP/HTTPS de las impresoras
+  - job_name: printers
+    metrics_path: /probe
+
+    params:
+      module: [http_insecure]
+
+    static_configs:
+      - targets:
+          # Reemplazar por las IP reales de las impresoras
+          - https://192.168.1.101
+          - https://192.168.1.102
+          - https://192.168.1.103
+          - https://192.168.1.104
+          - https://192.168.1.105
+          - https://192.168.1.106
+          - https://192.168.1.107
+          - https://192.168.1.108
+          - https://192.168.1.109
+
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+
+      - source_labels: [__param_target]
+        target_label: instance
+
+      - target_label: __address__
+        replacement: blackbox:9115
+
+  # Obtiene métricas SNMP generales:
+  # tóner, contador de páginas, tapas, nombre del equipo, etc.
+  - job_name: hp_printers
+    metrics_path: /snmp
+
+    params:
+      module: [printer_mib]
+      auth: [public_v2]
+
+    static_configs:
+      - targets:
+          # Reemplazar por las IP reales de las impresoras
+          - 192.168.1.101
+          - 192.168.1.102
+          - 192.168.1.103
+          - 192.168.1.104
+          - 192.168.1.105
+          - 192.168.1.106
+          - 192.168.1.107
+          - 192.168.1.108
+          - 192.168.1.109
+
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+
+      - source_labels: [__param_target]
+        target_label: instance
+
+      - target_label: __address__
+        replacement: snmp-exporter:9116
+
+  # Obtiene alertas activas desde Printer-MIB
+  - job_name: printer_alerts
+    metrics_path: /snmp
+
+    params:
+      module: [printer_alerts]
+      auth: [public_v2]
+
+    static_configs:
+      - targets:
+          # Reemplazar por las IP reales de las impresoras
+          - 192.168.1.101
+          - 192.168.1.102
+          - 192.168.1.103
+          - 192.168.1.104
+          - 192.168.1.105
+          - 192.168.1.106
+          - 192.168.1.107
+          - 192.168.1.108
+          - 192.168.1.109
+
+    relabel_configs:
+      - source_labels: [__address__]
+        target_label: __param_target
+
+      - source_labels: [__param_target]
+        target_label: instance
+
+      - target_label: __address__
+        replacement: snmp-alerts:9116

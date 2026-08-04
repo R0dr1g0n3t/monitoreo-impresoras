@@ -1,0 +1,21 @@
+# Respaldos
+*-backup.*
+*.bak
+
+# Archivos temporales
+*.tmp
+*.log
+
+# Sistema operativo
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editores
+.vscode/
+.idea/
+
+# Datos locales y secretos
+.env
+.env.*
+secrets/
