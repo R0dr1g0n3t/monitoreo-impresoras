@@ -8,7 +8,7 @@ Permite supervisar en tiempo real:
 - Nivel de tóner.
 - Alertas activas de Printer-MIB.
 - Estado de Prometheus.
-- Antigüedad de los datos recibidos.
+- Última actualización
 - Mensajes como bandeja vacía, atasco o tamaño de papel incorrecto.
 
 ## Dashboard
